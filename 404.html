@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <base href="/vibby-web/">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="Vibby — мессенджер с чатами, кружками и уведомлениями">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#111827">
+
+  <!-- iOS PWA: установка на экран «Домой» и push -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Vibby">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <link rel="icon" type="image/png" href="favicon.png">
+  <title>Vibby</title>
+  <link rel="manifest" href="manifest.json">
+  <style>
+    html, body { height: 100%; margin: 0; background: #111827; }
+    #boot {
+      position: fixed; inset: 0; z-index: 9999;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 18px; background: #111827; color: #94a3b8;
+      font: 14px system-ui, -apple-system, "Segoe UI", sans-serif;
+      transition: opacity .25s ease;
+    }
+    #boot img { width: 76px; height: 76px; border-radius: 20px; }
+    #boot .spin {
+      width: 26px; height: 26px; border-radius: 50%;
+      border: 3px solid #334155; border-top-color: #3b82f6;
+      animation: vibby-spin 1s linear infinite;
+    }
+    @keyframes vibby-spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <div id="boot">
+    <img src="icons/Icon-192.png" alt="Vibby">
+    <div class="spin"></div>
+    <div>Загрузка Vibby…</div>
+  </div>
+  <script>
+    (function () {
+      var boot = document.getElementById('boot');
+      function hide() {
+        if (!boot) return;
+        boot.style.opacity = '0';
+        setTimeout(function () {
+          if (boot.parentNode) boot.parentNode.removeChild(boot);
+        }, 300);
+      }
+      window.addEventListener('flutter-first-frame', hide);
+    })();
+  </script>
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>
